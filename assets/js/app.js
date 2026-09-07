@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         downloadBtn.disabled = true;
 
         try {
-            // Registra as métricas silenciosamente em segundo plano (não bloqueia nem exibe para o usuário)
+            // Registra as métricas silenciosamente em segundo plano
             metrics.trackDownload(formData).catch(err => console.debug('Metrics log:', err));
 
             // Gera a imagem em alta resolução
@@ -132,6 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
             const formData = getCurrentFormData();
+            const shareUrl = APP_CONFIG.shareUrl || 'https://colinha-cidada.vercel.app/';
             
             // Tenta usar Web Share API se suportar arquivos no celular
             if (navigator.canShare && navigator.canShare({ files: [] })) {
@@ -141,7 +142,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     
                     await navigator.share({
                         title: 'Colinha Lelo Couto',
-                        text: 'Confira minha colinha para as eleições!',
+                        text: `🗳️ Confira minha colinha eleitoral com Lelo Couto 15.444!\n\n👉 Monte a sua também no link: ${shareUrl}`,
+                        url: shareUrl,
                         files: [file]
                     });
                     
@@ -154,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
 
-            // Fallback: Compartilhamento via link do WhatsApp
+            // Fallback: Compartilhamento via link direto do WhatsApp
             metrics.trackDownload(formData).catch(() => {});
             
             const message = encodeURIComponent(
@@ -165,7 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 (formData.senador2 ? `🔹 Senador 2º: *${formData.senador2}*\n` : '') +
                 `🔹 Governador: *${formData.governador || '15'}*\n` +
                 (formData.presidente ? `🔹 Presidente: *${formData.presidente}*\n` : '') +
-                `\nMonte a sua colinha também!`
+                `\n👉 *Monte a sua colinha personalizada também no link:*\n${shareUrl}`
             );
             
             window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
