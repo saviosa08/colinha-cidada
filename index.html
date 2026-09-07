@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colinha Lelo Couto - Monte seu Santinho Digital</title>
+    
+    <!-- Meta Tags para Compartilhamento e Redes Sociais -->
+    <meta name="description" content="Monte seu santinho de votação com a Colinha Lelo Couto para as eleições e leve no seu celular!">
+    <meta property="og:title" content="Colinha Lelo Couto - Monte seu Santinho Digital">
+    <meta property="og:description" content="Preencha os números dos seus candidatos e baixe sua colinha oficial em alta qualidade.">
+    <meta property="og:image" content="assets/template.jpg">
+    
+    <!-- Ícone e Estilos -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%22><text y=%22.9em%22 font-size=%2290%22>🗳️</text></svg>">
+</head>
+<body>
+
+    <!-- Cabeçalho Principal -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo-wrap">
+                <div class="logo-badge">15.444</div>
+                <h1 class="app-title">Colinha <span>Lelo Couto</span></h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-wrapper">
+        <div class="editor-grid">
+            
+            <!-- Painel de Formulário e Preenchimento -->
+            <section class="form-panel">
+                <div class="panel-header">
+                    <h2>Monte sua Colinha</h2>
+                    <p>Preencha os números abaixo para personalizar seu santinho eleitoral.</p>
+                </div>
+
+                <form id="colinhaForm" onsubmit="return false;" class="fields-list">
+                    
+                    <!-- 1. Deputado Federal -->
+                    <div class="field-group prefilled">
+                        <div class="field-info">
+                            <div class="field-label">
+                                Deputado Federal
+                                <span class="field-badge badge-fixed">Oficial</span>
+                            </div>
+                            <div class="field-desc">4 dígitos (Definido da coligação)</div>
+                        </div>
+                        <div class="field-input-wrap">
+                            <input type="text" id="inputFederal" class="candidate-input" maxlength="4" readonly>
+                        </div>
+                    </div>
+
+                    <!-- 2. Deputado Estadual -->
+                    <div class="field-group prefilled">
+                        <div class="field-info">
+                            <div class="field-label">
+                                Deputado Estadual
+                                <span class="field-badge badge-fixed">Lelo Couto</span>
+                            </div>
+                            <div class="field-desc">5 dígitos (Trabalho que dá certo)</div>
+                        </div>
+                        <div class="field-input-wrap">
+                            <input type="text" id="inputEstadual" class="candidate-input" maxlength="5" readonly>
+                        </div>
+                    </div>
+
+                    <!-- 3. Senador 1º Voto -->
+                    <div class="field-group prefilled">
+                        <div class="field-info">
+                            <div class="field-label">
+                                Senador 1º Voto
+                                <span class="field-badge badge-fixed">Oficial</span>
+                            </div>
+                            <div class="field-desc">3 dígitos (Candidato da coligação)</div>
+                        </div>
+                        <div class="field-input-wrap">
+                            <input type="text" id="inputSenador1" class="candidate-input" maxlength="3" readonly>
+                        </div>
+                    </div>
+
+                    <!-- 4. Senador 2º Voto (Editável) -->
+                    <div class="field-group">
+                        <div class="field-info">
+                            <div class="field-label">
+                                Senador 2º Voto
+                                <span class="field-badge badge-active">Seu Voto</span>
+                            </div>
+                            <div class="field-desc">Digite os 3 dígitos do seu 2º senador</div>
+                        </div>
+                        <div class="field-input-wrap">
+                            <input type="tel" id="inputSenador2" class="candidate-input" maxlength="3" placeholder="000" autofocus inputmode="numeric">
+                        </div>
+                    </div>
+
+                    <!-- 5. Governador -->
+                    <div class="field-group prefilled">
+                        <div class="field-info">
+                            <div class="field-label">
+                                Governador
+                                <span class="field-badge badge-fixed">Oficial</span>
+                            </div>
+                            <div class="field-desc">2 dígitos (Coligação)</div>
+                        </div>
+                        <div class="field-input-wrap">
+                            <input type="text" id="inputGovernador" class="candidate-input" maxlength="2" readonly>
+                        </div>
+                    </div>
+
+                    <!-- 6. Presidente (Editável) -->
+                    <div class="field-group">
+                        <div class="field-info">
+                            <div class="field-label">
+                                Presidente
+                                <span class="field-badge badge-active">Seu Voto</span>
+                            </div>
+                            <div class="field-desc">Digite os 2 dígitos para Presidente</div>
+                        </div>
+                        <div class="field-input-wrap">
+                            <input type="tel" id="inputPresidente" class="candidate-input" maxlength="2" placeholder="00" inputmode="numeric">
+                        </div>
+                    </div>
+
+                </form>
+            </section>
+
+            <!-- Painel de Visualização do Santinho -->
+            <section class="preview-panel">
+                <div class="preview-header">
+                    <h3>Pré-visualização</h3>
+                </div>
+
+                <!-- Canvas de Alta Resolução -->
+                <div class="canvas-container">
+                    <canvas id="santinhoCanvas"></canvas>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="actions-wrap">
+                    <button id="btnDownload" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Baixar Santinho
+                    </button>
+
+                    <button id="btnShare" class="btn btn-whatsapp">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.079-1.807-.407-1.396-.578-2.29-1.99-2.36-2.083-.07-.093-.564-.75-.564-1.429 0-.679.355-1.013.481-1.152.127-.139.277-.174.37-.174.093 0 .185.001.266.006.085.005.199-.032.311.238.116.279.394.96.429 1.03.035.07.058.151.012.243-.046.093-.07.151-.139.232-.07.081-.147.18-.21.242-.07.07-.143.146-.062.285.081.139.362.597.777.967.534.475.984.622 1.123.691.139.07.22.058.302-.035.081-.093.348-.405.44-.544.093-.139.186-.116.313-.07.127.046.809.382.948.452.139.07.232.104.266.162.035.058.035.337-.109.742zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.438 5.176L2 22l4.982-1.309A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.2c-1.637 0-3.155-.499-4.42-1.356l-.317-.215-2.964.777.791-2.89-.236-.376C4.945 14.82 4.4 13.46 4.4 12c0-4.191 3.409-7.6 7.6-7.6 4.191 0 7.6 3.409 7.6 7.6 0 4.191-3.409 7.6-7.6 7.6z"/>
+                        </svg>
+                        Compartilhar no WhatsApp
+                    </button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="app-footer">
+        <p>© 2026 Colinha Lelo Couto 15.444. Uso eleitoral informativo.</p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts da Aplicação -->
+    <script src="assets/js/template-data.js"></script>
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/canvas.js"></script>
+    <script src="assets/js/metrics.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+/* ==========================================================================
+   COLINHA LELO COUTO - ESTILIZAÇÃO MODERNA & RESPONSIVA
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --color-orange: #f25b24;
+    --color-orange-dark: #d84510;
+    --color-blue: #0b3a92;
+    --color-blue-dark: #072663;
+    --color-blue-light: #e8f0fe;
+    --color-green: #00a859;
+    --color-bg: #f4f6fa;
+    --color-surface: #ffffff;
+    --color-text-main: #1e293b;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-border-focus: #0b3a92;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(11, 58, 146, 0.08);
+    --shadow-lg: 0 16px 36px rgba(11, 58, 146, 0.14);
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.app-header {
+    background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-blue-dark) 100%);
+    color: #ffffff;
+    padding: 1.1rem 1.5rem;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo-badge {
+    background-color: var(--color-orange);
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: -0.5px;
+    box-shadow: 0 2px 8px rgba(242, 91, 36, 0.4);
+}
+
+.app-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.app-title span {
+    color: #ffd166;
+}
+
+/* Layout Principal */
+.main-wrapper {
+    flex: 1;
+    max-width: 1200px;
+    margin: 1.5rem auto;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .editor-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Painel do Formulário */
+.form-panel {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+}
+
+.panel-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--color-bg);
+    padding-bottom: 1rem;
+}
+
+.panel-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--color-blue);
+}
+
+.panel-header p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Lista de Campos Eleitorais */
+.fields-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.field-group {
+    background: #f8fafc;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.15rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.field-group:focus-within {
+    border-color: var(--color-blue);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(11, 58, 146, 0.12);
+}
+
+.field-group.prefilled {
+    background: #f1f5f9;
+    border-style: dashed;
+}
+
+.field-info {
+    flex: 1;
+}
+
+.field-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-blue);
+    text-transform: uppercase;
+}
+
+.field-badge {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-fixed {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.badge-active {
+    background: #ffedd5;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+}
+
+.field-desc {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+}
+
+.field-input-wrap {
+    width: 130px;
+}
+
+.candidate-input {
+    width: 100%;
+    font-family: 'Montserrat', monospace;
+    font-size: 1.45rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-align: center;
+    padding: 0.5rem;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-blue);
+    background: #ffffff;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.candidate-input:focus {
+    border-color: var(--color-blue);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(11, 58, 146, 0.15);
+}
+
+.candidate-input:disabled,
+.candidate-input[readonly] {
+    background: #e2e8f0;
+    color: #334155;
+    cursor: not-allowed;
+    border-color: #cbd5e1;
+}
+
+/* Painel de Visualização do Santinho */
+.preview-panel {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 5rem;
+}
+
+.preview-header {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.preview-header h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-blue);
+}
+
+/* Canvas Container */
+.canvas-container {
+    width: 100%;
+    max-width: 380px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 3px solid #ffffff;
+    background: #e2e8f0;
+    aspect-ratio: 744 / 1024;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#santinhoCanvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Botões de Ação */
+.actions-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.95rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-orange) 0%, var(--color-orange-dark) 100%);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(242, 91, 36, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(242, 91, 36, 0.45);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-whatsapp {
+    background: #25d366;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp:hover {
+    background: #20ba5a;
+    transform: translateY(-2px);
+}
+
+/* Rodapé */
+.app-footer {
+    background: #ffffff;
+    border-top: 1px solid var(--color-border);
+    padding: 1.5rem;
+    margin-top: auto;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    background: #1e293b;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.toast-success {
+    background: #0f766e;
+}
+
+.toast-error {
+    background: #b91c1c;
+}
+
+.toast-info {
+    background: var(--color-blue);
+}
+
+/* Spinner */
+.spinner {
+    width: 20px;
+    height: 20px;
+    animation: rotate 1s linear infinite;
+}
+
+.spinner circle {
+    stroke: currentColor;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes dash {
+    0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+    50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+    100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+}
