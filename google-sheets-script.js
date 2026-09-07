@@ -3,39 +3,23 @@
  * GOOGLE APPS SCRIPT - Coleta Silenciosa de Métricas da Colinha Lelo Couto
  * ==============================================================================
  * 
- * Este script recebe os dados em segundo plano sempre que alguém clica em
- * "Baixar Santinho" e insere uma nova linha na sua Planilha Google.
+ * CABEÇALHOS DA SUA PLANILHA (Linha 1):
+ * Coluna A: ID
+ * Coluna B: Data/Hora
+ * Coluna C: Ação (Download ou WhatsApp)
+ * Coluna D: Deputado Federal
+ * Coluna E: Deputado Estadual
+ * Coluna F: Senador 1
+ * Coluna G: Senador 2
+ * Coluna H: Governador
+ * Coluna I: Presidente
+ * Coluna J: Dispositivo
  * 
- * ------------------------------------------------------------------------------
- * COMO RESOLVER O ERRO "NÃO FOI POSSÍVEL ABRIR O ARQUIVO" NO GOOGLE DRIVE:
- * Esse erro ocorre quando você possui mais de uma conta Google logada no navegador
- * ao mesmo tempo.
- * 
- * Siga uma das duas opções abaixo para criar sem erro:
- * 
- * OPÇÃO A (Recomendada - Direto pelo Apps Script):
- * 1. Abra o link: https://script.google.com/home/start (de preferência em Janela Anônima)
- * 2. Clique no botão "+ Novo projeto".
- * 3. Apague o código padrão e cole o código deste arquivo.
- * 4. Na linha 39 abaixo, cole o ID da sua planilha onde diz 'COLE_AQUI_O_ID_DA_SUA_PLANILHA'
- *    (O ID é o código longo na URL da planilha: docs.google.com/spreadsheets/d/SEU_ID_AQUI/edit)
- * 5. Clique em "Implantar" (Deploy) > "Nova implantação".
- * 6. Tipo: "App da Web" (Web App).
- * 7. Executar como: "Eu", Quem pode acessar: "Qualquer pessoa" (Anyone).
- * 8. Clique em "Implantar", copie a "URL do app da Web" gerada.
- * 9. Cole essa URL no arquivo `assets/js/config.js` na propriedade `metricsWebhookUrl`.
- * 
- * OPÇÃO B (Pelo menu da Planilha):
- * 1. Abra uma Janela Anônima no navegador (Ctrl + Shift + N).
- * 2. Faça login apenas na sua conta Google.
- * 3. Abra a Planilha > Extensões > Apps Script.
- * 4. Cole este código e faça a implantação como App da Web.
  * ------------------------------------------------------------------------------
  */
 
-// Se você criar o script como projeto independente (Opção A), coloque o ID da planilha abaixo.
-// Se criar direto pelo menu da planilha (Opção B), pode deixar vazio ''.
-var SPREADSHEET_ID = ''; 
+// Se você criou o script pelo link https://script.google.com/home/start, coloque o ID da planilha abaixo:
+var SPREADSHEET_ID = '1lF8_5VZXCAtx3kcrCmoV1AQUg6oMRMlr_I5deeZfOzc'; 
 
 function doPost(e) {
   try {
@@ -52,6 +36,7 @@ function doPost(e) {
     sheet.appendRow([
       data.id || '',
       data.dataHoraFormatada || data.timestamp || new Date(),
+      data.acao || 'Download', // 'Download' ou 'WhatsApp'
       data.deputadoFederal || '',
       data.deputadoEstadual || '',
       data.senador1 || '',

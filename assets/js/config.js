@@ -5,9 +5,6 @@ const APP_CONFIG = {
     // Título da aplicação
     appName: 'Colinha Lelo Couto',
 
-    // Link oficial da aplicação para compartilhamento
-    shareUrl: 'https://colinha-cidada.vercel.app/',
-
     // Valores padrão dos candidatos
     defaults: {
         deputadoFederal: '4444',
@@ -19,9 +16,11 @@ const APP_CONFIG = {
     },
 
     // URL do Webhook do Google Apps Script para salvar métricas em segundo plano
-    metricsWebhookUrl: '',
+    // Cole aqui a URL do seu Web App gerada no Google Apps Script (veja README.md)
+    metricsWebhookUrl: 'https://script.google.com/macros/s/AKfycbxF7FkkPfHfmHZos-ADQSRiTPmxH66TuZDxiI-5C-yo8RVs3bIODhxv-bj_a7FeiYBFLA/exec',
 
     // Coordenadas exatas das caixas de dígitos no template oficial (744 x 1024)
+    // Calibradas pixel a pixel diretamente na imagem original
     boxes: {
         deputadoFederal: [
             { x: 44,  y: 192, width: 60, height: 61, centerX: 74,  centerY: 222 },
@@ -61,6 +60,6 @@ const APP_CONFIG = {
         family: "'Montserrat', 'Arial Black', Impact, sans-serif",
         weight: '900',
         size: '50px',
-        color: '#1b3f94'
+        color: '#1b3f94' // Azul oficial idêntico ao "15444" impresso
     }
 };

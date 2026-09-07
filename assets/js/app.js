@@ -62,14 +62,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!input) return;
 
         input.addEventListener('input', (e) => {
-            // Permite somente dígitos numéricos
             const cleaned = e.target.value.replace(/\D/g, '');
             e.target.value = cleaned;
 
-            // Atualiza o canvas
             santinho.update(getCurrentFormData());
 
-            // Auto-avanço para o próximo campo editável se preencher
             const maxLength = parseInt(input.getAttribute('maxlength'), 10);
             if (cleaned.length >= maxLength) {
                 for (let i = index + 1; i < fieldOrder.length; i++) {
@@ -93,7 +90,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     downloadBtn.addEventListener('click', async () => {
         const formData = getCurrentFormData();
 
-        // Feedback visual sutil no botão
         const originalBtnText = downloadBtn.innerHTML;
         downloadBtn.innerHTML = `
             <svg class="spinner" viewBox="0 0 50 50">
@@ -104,8 +100,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         downloadBtn.disabled = true;
 
         try {
-            // Registra as métricas silenciosamente em segundo plano
-            metrics.trackDownload(formData).catch(err => console.debug('Metrics log:', err));
+            // Registra métrica com ação 'Download'
+            metrics.trackEvent(formData, 'Download').catch(err => console.debug('Metrics log:', err));
 
             // Gera a imagem em alta resolução
             const dataUrl = santinho.toDataURL('image/jpeg', 0.95);
@@ -134,6 +130,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const formData = getCurrentFormData();
             const shareUrl = APP_CONFIG.shareUrl || 'https://colinha-cidada.vercel.app/';
             
+            // Registra métrica com ação 'WhatsApp'
+            metrics.trackEvent(formData, 'WhatsApp').catch(() => {});
+
             // Tenta usar Web Share API se suportar arquivos no celular
             if (navigator.canShare && navigator.canShare({ files: [] })) {
                 try {
@@ -147,7 +146,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         files: [file]
                     });
                     
-                    metrics.trackDownload(formData).catch(() => {});
                     return;
                 } catch (e) {
                     if (e.name !== 'AbortError') {
@@ -157,8 +155,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // Fallback: Compartilhamento via link direto do WhatsApp
-            metrics.trackDownload(formData).catch(() => {});
-            
             const message = encodeURIComponent(
                 `🗳️ *Colinha Eleitoral - Lelo Couto:*\n\n` +
                 `🔹 Dep. Federal: *${formData.deputadoFederal || '4444'}*\n` +

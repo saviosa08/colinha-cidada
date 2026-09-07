@@ -1,5 +1,5 @@
 /**
- * Módulo de Métricas e Registro de Estatísticas de Download
+ * Módulo de Métricas e Registro de Estatísticas de Download e Compartilhamento
  */
 class MetricsService {
     constructor(config) {
@@ -8,7 +8,7 @@ class MetricsService {
     }
 
     /**
-     * Gera um ID único para o download (UUIDv4)
+     * Gera um ID único para o evento (UUIDv4)
      */
     generateId() {
         if (crypto && crypto.randomUUID) {
@@ -18,13 +18,14 @@ class MetricsService {
     }
 
     /**
-     * Registra o evento de download
+     * Registra o evento de ação (Download ou WhatsApp)
      */
-    async trackDownload(candidateData) {
+    async trackEvent(candidateData, actionType = 'Download') {
         const payload = {
             id: this.generateId(),
             timestamp: new Date().toISOString(),
             dataHoraFormatada: new Date().toLocaleString('pt-BR'),
+            acao: actionType, // 'Download' ou 'WhatsApp'
             deputadoFederal: candidateData.deputadoFederal || '',
             deputadoEstadual: candidateData.deputadoEstadual || '',
             senador1: candidateData.senador1 || '',
@@ -35,15 +36,15 @@ class MetricsService {
             dispositivo: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'
         };
 
-        // 1. Salva localmente no navegador (LocalStorage)
+        // 1. Salva localmente
         this.saveToLocalStorage(payload);
 
-        // 2. Se houver Webhook do Google Apps Script configurado, envia os dados
+        // 2. Envia para o Webhook do Google Apps Script
         if (this.config.metricsWebhookUrl && this.config.metricsWebhookUrl.trim() !== '') {
             try {
                 await this.sendToWebhook(this.config.metricsWebhookUrl, payload);
             } catch (err) {
-                console.warn('Não foi possível enviar métricas para o webhook remoto:', err);
+                console.debug('Métricas remoto:', err);
             }
         }
 
@@ -51,11 +52,17 @@ class MetricsService {
     }
 
     /**
-     * Envia os dados para a URL do Webhook (Google Sheets Apps Script / Vercel API / Servidor)
+     * Alias retrocompatível
+     */
+    async trackDownload(candidateData, actionType = 'Download') {
+        return this.trackEvent(candidateData, actionType);
+    }
+
+    /**
+     * Envia os dados para a URL do Webhook
      */
     async sendToWebhook(url, data) {
         try {
-            // Google Apps Script requer mode: 'no-cors' para requisições cross-origin simples
             await fetch(url, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -64,25 +71,24 @@ class MetricsService {
                 },
                 body: JSON.stringify(data)
             });
-            console.log('Métrica enviada com sucesso para o webhook.');
+            console.log(`Métrica [${data.acao}] enviada com sucesso para o webhook.`);
         } catch (error) {
-            console.error('Erro ao enviar requisição de métrica:', error);
+            console.debug('Erro ao enviar métrica:', error);
         }
     }
 
     /**
-     * Salva no LocalStorage do navegador
+     * Salva no LocalStorage
      */
     saveToLocalStorage(record) {
         try {
             const raw = localStorage.getItem(this.storageKey);
             const list = raw ? JSON.parse(raw) : [];
             list.push(record);
-            // Mantém até os últimos 1000 registros locais
             if (list.length > 1000) list.shift();
             localStorage.setItem(this.storageKey, JSON.stringify(list));
         } catch (e) {
-            console.error('Erro ao salvar no LocalStorage:', e);
+            console.debug('LocalStorage error:', e);
         }
     }
 
@@ -96,29 +102,5 @@ class MetricsService {
         } catch (e) {
             return [];
         }
-    }
-
-    /**
-     * Exporta os dados salvos localmente em formato CSV
-     */
-    exportLocalToCSV() {
-        const history = this.getLocalHistory();
-        if (history.length === 0) return null;
-
-        const headers = ['ID', 'Data/Hora', 'Deputado Federal', 'Deputado Estadual', 'Senador 1', 'Senador 2', 'Governador', 'Presidente', 'Dispositivo'];
-        const rows = history.map(item => [
-            `"${item.id}"`,
-            `"${item.dataHoraFormatada || item.timestamp}"`,
-            `"${item.deputadoFederal}"`,
-            `"${item.deputadoEstadual}"`,
-            `"${item.senador1}"`,
-            `"${item.senador2}"`,
-            `"${item.governador}"`,
-            `"${item.presidente}"`,
-            `"${item.dispositivo}"`
-        ]);
-
-        const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-        return csvContent;
     }
 }
