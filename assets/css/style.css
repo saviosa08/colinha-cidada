@@ -17,6 +17,7 @@
     --color-text-muted: #64748b;
     --color-border: #e2e8f0;
     --color-border-focus: #0b3a92;
+    --color-error: #ef4444;
     --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
     --shadow-md: 0 8px 24px rgba(11, 58, 146, 0.08);
     --shadow-lg: 0 16px 36px rgba(11, 58, 146, 0.14);
@@ -168,6 +169,19 @@ body {
 .field-group.prefilled {
     background: #f1f5f9;
     border-style: dashed;
+}
+
+.field-group.field-error {
+    border-color: var(--color-error) !important;
+    background: #fef2f2 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2) !important;
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
 }
 
 .field-info {
@@ -344,6 +358,127 @@ body {
     transform: translateY(-2px);
 }
 
+.btn-secondary {
+    background: #f1f5f9;
+    color: var(--color-text-main);
+    border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+    background: #e2e8f0;
+}
+
+/* Modal Auxiliar de Salvamento de Imagem (iOS / WebViews) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-save-card {
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    max-width: 440px;
+    width: 100%;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-save-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-save-header h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--color-blue);
+}
+
+.btn-close-modal {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.25rem;
+}
+
+.modal-save-body {
+    padding: 1.25rem;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.modal-hint {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.modal-img-wrap {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--color-border);
+}
+
+.modal-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.modal-save-footer {
+    padding: 0.85rem 1.25rem;
+    border-top: 1px solid var(--color-border);
+    background: #f8fafc;
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* Rodapé */
 .app-footer {
     background: #ffffff;
@@ -372,6 +507,7 @@ body {
     transform: translateY(20px);
     transition: all 0.3s ease;
     pointer-events: none;
+    max-width: 90vw;
 }
 
 .toast.show {
@@ -385,7 +521,11 @@ body {
 }
 
 .toast-error {
-    background: #b91c1c;
+    background: #dc2626;
+}
+
+.toast-warning {
+    background: #d97706;
 }
 
 .toast-info {

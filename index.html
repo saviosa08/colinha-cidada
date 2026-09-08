@@ -35,83 +35,83 @@
             <section class="form-panel">
                 <div class="panel-header">
                     <h2>Monte sua Colinha</h2>
-                    <p>Preencha os números abaixo para personalizar seu santinho eleitoral.</p>
+                    <p>Preencha os números dos seus candidatos para gerar o santinho.</p>
                 </div>
 
                 <form id="colinhaForm" onsubmit="return false;" class="fields-list">
                     
-                    <!-- 1. Deputado Federal -->
-                    <div class="field-group prefilled">
+                    <!-- 1. Deputado Federal (Editável) -->
+                    <div class="field-group" id="groupFederal">
                         <div class="field-info">
                             <div class="field-label">
                                 Deputado Federal
-                                <span class="field-badge badge-fixed">Oficial</span>
+                                <span class="field-badge badge-active">Seu Voto</span>
                             </div>
-                            <div class="field-desc">4 dígitos (Definido da coligação)</div>
+                            <div class="field-desc">Digite os 4 dígitos para Deputado Federal</div>
                         </div>
                         <div class="field-input-wrap">
-                            <input type="text" id="inputFederal" class="candidate-input" maxlength="4" readonly>
+                            <input type="tel" id="inputFederal" class="candidate-input" maxlength="4" placeholder="0000" autofocus inputmode="numeric">
                         </div>
                     </div>
 
-                    <!-- 2. Deputado Estadual -->
-                    <div class="field-group prefilled">
+                    <!-- 2. Deputado Estadual (Fixo 15444) -->
+                    <div class="field-group prefilled" id="groupEstadual">
                         <div class="field-info">
                             <div class="field-label">
                                 Deputado Estadual
                                 <span class="field-badge badge-fixed">Lelo Couto</span>
                             </div>
-                            <div class="field-desc">5 dígitos (Trabalho que dá certo)</div>
+                            <div class="field-desc">15444 (Trabalho que dá certo)</div>
                         </div>
                         <div class="field-input-wrap">
-                            <input type="text" id="inputEstadual" class="candidate-input" maxlength="5" readonly>
+                            <input type="text" id="inputEstadual" class="candidate-input" maxlength="5" value="15444" readonly>
                         </div>
                     </div>
 
-                    <!-- 3. Senador 1º Voto -->
-                    <div class="field-group prefilled">
+                    <!-- 3. Senador 1º Voto (Editável) -->
+                    <div class="field-group" id="groupSenador1">
                         <div class="field-info">
                             <div class="field-label">
                                 Senador 1º Voto
-                                <span class="field-badge badge-fixed">Oficial</span>
+                                <span class="field-badge badge-active">Seu Voto</span>
                             </div>
-                            <div class="field-desc">3 dígitos (Candidato da coligação)</div>
+                            <div class="field-desc">Digite os 3 dígitos do 1º senador</div>
                         </div>
                         <div class="field-input-wrap">
-                            <input type="text" id="inputSenador1" class="candidate-input" maxlength="3" readonly>
+                            <input type="tel" id="inputSenador1" class="candidate-input" maxlength="3" placeholder="000" inputmode="numeric">
                         </div>
                     </div>
 
                     <!-- 4. Senador 2º Voto (Editável) -->
-                    <div class="field-group">
+                    <div class="field-group" id="groupSenador2">
                         <div class="field-info">
                             <div class="field-label">
                                 Senador 2º Voto
                                 <span class="field-badge badge-active">Seu Voto</span>
                             </div>
-                            <div class="field-desc">Digite os 3 dígitos do seu 2º senador</div>
+                            <div class="field-desc">Digite os 3 dígitos do 2º senador (diferente do 1º)</div>
                         </div>
                         <div class="field-input-wrap">
-                            <input type="tel" id="inputSenador2" class="candidate-input" maxlength="3" placeholder="000" autofocus inputmode="numeric">
+                            <input type="tel" id="inputSenador2" class="candidate-input" maxlength="3" placeholder="000" inputmode="numeric">
                         </div>
                     </div>
 
-                    <!-- 5. Governador -->
-                    <div class="field-group prefilled">
+                    <!-- 5. Governador (Editável) -->
+                    <div class="field-group" id="groupGovernador">
                         <div class="field-info">
                             <div class="field-label">
                                 Governador
-                                <span class="field-badge badge-fixed">Oficial</span>
+                                <span class="field-badge badge-active">Seu Voto</span>
                             </div>
-                            <div class="field-desc">2 dígitos (Coligação)</div>
+                            <div class="field-desc">Digite os 2 dígitos para Governador</div>
                         </div>
                         <div class="field-input-wrap">
-                            <input type="text" id="inputGovernador" class="candidate-input" maxlength="2" readonly>
+                            <input type="tel" id="inputGovernador" class="candidate-input" maxlength="2" placeholder="00" inputmode="numeric">
                         </div>
                     </div>
 
                     <!-- 6. Presidente (Editável) -->
-                    <div class="field-group">
+                    <div class="field-group" id="groupPresidente">
                         <div class="field-info">
                             <div class="field-label">
                                 Presidente
@@ -160,6 +160,25 @@
 
         </div>
     </main>
+
+    <!-- Modal Auxiliar para Salvar Imagem (iOS / Navegadores Internos) -->
+    <div id="saveModal" class="modal-overlay">
+        <div class="modal-save-card">
+            <div class="modal-save-header">
+                <h3>📱 Salvar Santinho</h3>
+                <button id="btnCloseSaveModal" class="btn-close-modal">&times;</button>
+            </div>
+            <div class="modal-save-body">
+                <p class="modal-hint">👉 <strong>Toque e segure o dedo</strong> na imagem abaixo e selecione <strong>"Salvar nas Fotos"</strong> ou <strong>"Fazer download da imagem"</strong>.</p>
+                <div class="modal-img-wrap">
+                    <img id="modalSavedImage" src="" alt="Santinho Eleitoral Lelo Couto">
+                </div>
+            </div>
+            <div class="modal-save-footer">
+                <button id="btnModalClose" class="btn btn-secondary">Fechar</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Rodapé -->
     <footer class="app-footer">
